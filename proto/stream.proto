@@ -1,0 +1,15 @@
+// How to generate hello.proto to go file:
+//   protoc --go_out=plugins=grpc:. hello.proto
+syntax = "proto3";
+option go_package = ".;stream";
+package stream;
+
+service StreamService {
+  rpc Stream(stream Bytes) returns (stream Bytes);
+}
+
+message Bytes {
+  bytes data = 1;
+}
+
+// +
