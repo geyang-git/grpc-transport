@@ -1,6 +1,7 @@
 package grpc_transport
 
 import (
+	"google.golang.org/grpc/peer"
 	"net"
 	"sync"
 	"time"
@@ -159,11 +160,18 @@ func (c *Conn) Close() error {
 }
 
 // LocalAddr returns nil.
-func (c *Conn) LocalAddr() net.Addr { return nil }
+func (c *Conn) LocalAddr() net.Addr {
+	//ctx := c.Stream.Context()
+	//p, _ := peer.FromContext(ctx)
+	//return p.Addr
+	return nil
+}
 
 // RemoteAddr returns nil.
 func (c *Conn) RemoteAddr() net.Addr {
-	return nil
+	ctx := c.Stream.Context()
+	p, _ := peer.FromContext(ctx)
+	return p.Addr
 }
 
 // SetDeadline is non-functional due to limitations on how gRPC works.
